@@ -14,6 +14,7 @@
   --accent: #14B8A6;
   --accent-light: #5EEAD4;
   --accent-dark: #0D9488;
+  --coral: #F97316;
   --bg: #ffffff;
   --bg-soft: #f5f5f7;
   --bg-dark: #000000;
@@ -28,12 +29,13 @@
   --font-serif: 'Noto Serif SC', Georgia, serif;
   --font-sans: 'Noto Sans SC', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 body { font-family: var(--font-sans); color: var(--text-primary); background: var(--bg); line-height: 1.5; overflow-x: hidden; }
 
-/* ==================== NAVIGATION — Quiet Frosted Glass ==================== */
+/* ==================== NAVIGATION ==================== */
 .nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
   height: 44px; display: flex; align-items: center; justify-content: space-between;
@@ -45,7 +47,6 @@ body { font-family: var(--font-sans); color: var(--text-primary); background: va
   transition: background 0.5s var(--ease);
 }
 .nav.scrolled { background: rgba(255,255,255,0.92); box-shadow: 0 0.5px 0 rgba(0,0,0,0.06); }
-
 .nav-logo {
   display: flex; align-items: center; gap: 8px;
   font-weight: 600; font-size: 15px; letter-spacing: -0.02em;
@@ -61,6 +62,7 @@ body { font-family: var(--font-sans); color: var(--text-primary); background: va
   padding: 6px 14px; border-radius: 980px; font-size: 12px; font-weight: 400;
   color: var(--text-secondary); cursor: pointer; transition: color 0.3s var(--ease);
   border: none; background: none; font-family: var(--font-sans); letter-spacing: 0;
+  text-decoration: none;
 }
 .nav-link:hover { color: var(--text-primary); }
 .nav-link.active { color: var(--text-primary); font-weight: 600; background: transparent; }
@@ -127,7 +129,7 @@ body { font-family: var(--font-sans); color: var(--text-primary); background: va
 }
 @keyframes heroIn { to { opacity: 1; transform: translateY(0); } }
 
-/* ==================== BUTTONS — Quiet Apple ==================== */
+/* ==================== BUTTONS ==================== */
 .btn {
   display: inline-flex; align-items: center; gap: 6px;
   padding: 12px 28px; border-radius: 980px;
@@ -141,6 +143,134 @@ body { font-family: var(--font-sans); color: var(--text-primary); background: va
 .btn-ghost:hover { text-decoration: underline; }
 .btn .arrow { transition: transform 0.3s var(--ease); font-size: 16px; }
 .btn:hover .arrow { transform: translateX(2px); }
+
+/* ==================== 1. HERO PRODUCT DEMO — Book→Graph Animation ==================== */
+.hero-product-demo {
+  margin-top: 72px;
+  width: min(960px, 92vw);
+  border-radius: 36px;
+  background: #f5f5f7;
+  display: grid;
+  grid-template-columns: 1.1fr 80px 1fr;
+  align-items: center;
+  padding: 48px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.08);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(40px);
+  animation: heroIn 1.2s var(--ease) 1s forwards;
+}
+
+.book-page {
+  position: relative;
+  border-radius: 24px;
+  background: #fff;
+  padding: 36px;
+  min-height: 220px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+  animation: pageFloat 4s ease-in-out infinite;
+}
+
+.book-page p {
+  font-size: 18px;
+  line-height: 1.9;
+  color: #1d1d1f;
+}
+
+.token {
+  position: absolute;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(20,184,166,0.12);
+  color: #0d9488;
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: tokenAppear 0.8s ease forwards;
+}
+
+.token-1 { left: 42px; top: 92px; animation-delay: 1.8s; }
+.token-2 { left: 138px; top: 92px; animation-delay: 2.2s; }
+.token-3 { left: 230px; top: 142px; animation-delay: 2.6s; }
+
+.ai-flow-line {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #14B8A6, transparent);
+  transform: scaleX(0);
+  animation: flowGrow 1.2s ease forwards;
+  animation-delay: 3s;
+}
+
+.knowledge-mini-graph {
+  position: relative;
+  height: 260px;
+}
+
+.kg-node {
+  position: absolute;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+  font-size: 14px;
+  font-weight: 600;
+  opacity: 0;
+  animation: nodePop 0.7s var(--ease-spring) forwards;
+}
+
+.kg-node.center {
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  background: #1d1d1f;
+  color: #fff;
+  animation-delay: 3.8s;
+}
+
+.kg-node.n1 { left: 20px; top: 42px; animation-delay: 4.1s; }
+.kg-node.n2 { right: 22px; top: 62px; animation-delay: 4.3s; }
+.kg-node.n3 { left: 72px; bottom: 36px; animation-delay: 4.5s; }
+
+/* Connection lines in mini graph */
+.kg-line {
+  position: absolute;
+  background: rgba(20,184,166,0.2);
+  height: 1px;
+  transform-origin: left center;
+  opacity: 0;
+  animation: lineAppear 0.6s ease forwards;
+}
+.kg-line-1 { left: 50%; top: 50%; width: 120px; transform: rotate(-35deg); animation-delay: 4.1s; }
+.kg-line-2 { left: 50%; top: 50%; width: 130px; transform: rotate(25deg); animation-delay: 4.3s; }
+.kg-line-3 { left: 50%; top: 50%; width: 110px; transform: rotate(150deg); animation-delay: 4.5s; }
+
+@keyframes tokenAppear {
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes flowGrow {
+  to { transform: scaleX(1); }
+}
+@keyframes nodePop {
+  to { opacity: 1; transform: translate(0, 0) scale(1); }
+}
+@keyframes pageFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes lineAppear {
+  to { opacity: 1; }
+}
+
+/* Demo label */
+.demo-label {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-top: 24px;
+  font-size: 13px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.02em;
+}
+.demo-label strong { color: var(--accent-dark); font-weight: 600; }
 
 /* ==================== PRODUCT MOCKUP ==================== */
 .mockup {
@@ -171,6 +301,73 @@ body { font-family: var(--font-sans); color: var(--text-primary); background: va
 .graph-side-item.active { background: var(--accent); color: #fff; }
 .graph-canvas { position: relative; border-radius: var(--radius-sm); background: #fff; border: 1px solid var(--border); overflow: hidden; }
 .graph-canvas svg { width: 100%; height: 100%; }
+
+/* 2. Graph Detail Panel — Click to Expand */
+.graph-detail-panel {
+  position: absolute;
+  right: 40px; top: 120px;
+  width: 280px; padding: 24px;
+  border-radius: 24px;
+  background: rgba(255,255,255,0.78);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+  opacity: 0;
+  transform: translateX(24px);
+  transition: all 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+  pointer-events: none;
+  z-index: 10;
+}
+.graph-detail-panel.active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+.panel-label {
+  font-size: 12px; color: var(--accent); font-weight: 700; margin-bottom: 8px;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.graph-detail-panel h3 {
+  font-family: var(--font-serif); font-size: 20px; font-weight: 600; margin-bottom: 8px;
+}
+.graph-detail-panel p {
+  font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px;
+}
+.panel-tags {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px;
+}
+.panel-tags span {
+  padding: 6px 10px; border-radius: 999px;
+  background: rgba(20,184,166,0.1); color: var(--accent-dark);
+  font-size: 12px; font-weight: 500;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: all 0.4s var(--ease);
+}
+.graph-detail-panel.active .panel-tags span {
+  opacity: 1;
+  transform: translateY(0);
+}
+.graph-detail-panel.active .panel-tags span:nth-child(1) { transition-delay: 0.15s; }
+.graph-detail-panel.active .panel-tags span:nth-child(2) { transition-delay: 0.25s; }
+.graph-detail-panel.active .panel-tags span:nth-child(3) { transition-delay: 0.35s; }
+.graph-detail-panel.active .panel-tags span:nth-child(4) { transition-delay: 0.45s; }
+
+/* Expanded sub-nodes */
+.graph-canvas .sub-node {
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.5s var(--ease-spring);
+}
+.graph-canvas.expanded .sub-node {
+  opacity: 1;
+  transform: scale(1);
+}
+.graph-canvas.expanded .sub-node:nth-child(1) { transition-delay: 0.1s; }
+.graph-canvas.expanded .sub-node:nth-child(2) { transition-delay: 0.2s; }
+.graph-canvas.expanded .sub-node:nth-child(3) { transition-delay: 0.3s; }
+.graph-canvas.expanded .sub-node:nth-child(4) { transition-delay: 0.4s; }
+.graph-canvas.expanded .sub-node:nth-child(5) { transition-delay: 0.5s; }
+
 .graph-detail { display: flex; flex-direction: column; gap: 12px; }
 .graph-detail-card {
   padding: 16px; border-radius: var(--radius-sm); background: #fff;
@@ -195,7 +392,6 @@ body { font-family: var(--font-sans); color: var(--text-primary); background: va
 .bento-card p { font-size: 15px; color: var(--text-secondary); line-height: 1.55; }
 .bento-dark p { color: #86868b; }
 
-/* Mini Visual — Abstract Graph */
 .mini-graph {
   display: flex; align-items: center; gap: 12px; margin-top: 24px;
 }
@@ -207,15 +403,128 @@ body { font-family: var(--font-sans); color: var(--text-primary); background: va
 .mini-line { width: 24px; height: 1px; background: rgba(0,0,0,0.12); }
 .bento-dark .mini-line { background: rgba(255,255,255,0.1); }
 
-/* Mini Visual — Strokes */
 .mini-strokes { display: flex; gap: 8px; margin-top: 24px; align-items: flex-end; }
 .mini-bar { width: 40px; border-radius: 6px 6px 0 0; background: var(--accent); opacity: 0.6; }
 
-/* ==================== SCENE: CLASSROOM ==================== */
+/* ==================== 3. AI CLASSROOM — Scan + Evaluate Animation ==================== */
 .classroom-scene {
   display: grid; grid-template-columns: 1fr 320px; gap: 24px;
   margin-top: 64px;
 }
+
+.ai-evaluation-card {
+  display: grid; grid-template-columns: 1.2fr 0.8fr;
+  gap: 24px;
+  border-radius: 32px;
+  background: #f5f5f7;
+  padding: 32px;
+  margin-top: 64px;
+  width: 100%;
+}
+
+.writing-canvas {
+  position: relative;
+  min-height: 300px;
+  border-radius: 24px;
+  background:
+    linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px),
+    #fff;
+  background-size: 48px 48px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.writing-canvas::after {
+  content: '永';
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-serif);
+  font-size: 160px;
+  color: var(--text-primary);
+  opacity: 0.15;
+}
+
+.scan-line {
+  position: absolute;
+  left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+  box-shadow: 0 0 24px rgba(20,184,166,0.6);
+  animation: scanMove 3s ease-in-out infinite;
+  z-index: 2;
+}
+
+.mark {
+  position: absolute;
+  z-index: 3;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(4px);
+}
+.mark-coral {
+  background: rgba(249,115,22,0.12);
+  color: var(--coral);
+}
+.mark-accent {
+  background: rgba(20,184,166,0.12);
+  color: var(--accent-dark);
+}
+
+.mark-1 { left: 32%; top: 30%; animation: markShow 0.5s ease 1.2s forwards; }
+.mark-2 { left: 54%; top: 54%; animation: markShow 0.5s ease 1.8s forwards; }
+.mark-3 { right: 28%; top: 42%; animation: markShow 0.5s ease 2.2s forwards; }
+
+.evaluation-panel {
+  display: flex; flex-direction: column; justify-content: center; gap: 20px;
+}
+
+.evaluation-panel h4 {
+  font-family: var(--font-serif); font-size: 18px; font-weight: 600; margin-bottom: 4px;
+}
+
+.score-row { margin-bottom: 4px; }
+.score-row span {
+  display: block; font-size: 14px; margin-bottom: 8px; color: var(--text-secondary);
+}
+.score-bar {
+  height: 8px; border-radius: 999px; background: rgba(0,0,0,0.08); overflow: hidden;
+}
+.score-bar i {
+  display: block; height: 100%; width: 0;
+  border-radius: 999px; background: var(--accent);
+  transition: width 1.2s var(--ease);
+}
+.score-bar i.animated { width: var(--w); }
+
+.ai-suggestion-inline {
+  margin-top: 12px;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(0,0,0,0.04);
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.ai-suggestion-inline strong { color: var(--accent-dark); }
+
+@keyframes scanMove {
+  0% { top: 0; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+@keyframes markShow {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Keep old ai-panel for compact layout */
 .canvas-area {
   border-radius: var(--radius-lg); background: var(--bg-soft);
   border: 1px solid var(--border); padding: 40px; min-height: 440px;
@@ -228,7 +537,6 @@ body { font-family: var(--font-sans); color: var(--text-primary); background: va
   top: 50%; left: 50%; transform: translate(-50%, -50%);
 }
 .canvas-overlay { position: relative; z-index: 1; text-align: center; }
-.canvas-overlay svg { margin-bottom: 16px; }
 .ai-panel { display: flex; flex-direction: column; gap: 16px; }
 .ai-score-card {
   border-radius: var(--radius-md); padding: 24px;
@@ -245,7 +553,100 @@ body { font-family: var(--font-sans); color: var(--text-primary); background: va
 .ai-suggestion h5 { font-size: 13px; font-weight: 600; color: var(--accent-light); margin-bottom: 6px; }
 .ai-suggestion p { font-size: 14px; color: #86868b; line-height: 1.5; }
 
-/* ==================== SCENE: LEARNING ==================== */
+/* ==================== 4. QUIZ — Feedback Animation ==================== */
+.quiz-scene {
+  margin-top: 64px; max-width: 680px; margin-left: auto; margin-right: auto;
+}
+.quiz-card-main {
+  border-radius: var(--radius-lg); background: var(--bg-soft);
+  border: 1px solid var(--border); padding: 48px;
+}
+.quiz-q {
+  font-family: var(--font-serif); font-size: 26px; font-weight: 600;
+  line-height: 1.3; letter-spacing: -0.02em; margin-bottom: 32px;
+}
+.quiz-opts { display: flex; flex-direction: column; gap: 10px; }
+.quiz-opt {
+  padding: 16px 20px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border); background: #fff;
+  font-size: 15px; font-weight: 500; cursor: pointer;
+  transition: all 0.3s var(--ease); font-family: var(--font-sans);
+  text-align: left; display: flex; align-items: center; gap: 12px;
+}
+.quiz-opt:hover { border-color: var(--accent); }
+.quiz-opt.selected { border-color: var(--accent); background: rgba(20,184,166,0.04); }
+.quiz-opt .letter {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--bg-soft); display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 600; flex-shrink: 0;
+  transition: all 0.3s var(--ease);
+}
+.quiz-opt.selected .letter { background: var(--accent); color: #fff; }
+
+/* Correct / Wrong states */
+.quiz-opt.correct {
+  border-color: var(--accent);
+  background: rgba(20,184,166,0.08);
+}
+.quiz-opt.correct .letter { background: var(--accent); color: #fff; }
+.quiz-opt.wrong {
+  border-color: var(--coral);
+  background: rgba(249,115,22,0.06);
+  animation: shake 0.35s ease;
+}
+.quiz-opt.wrong .letter { background: var(--coral); color: #fff; }
+
+/* Answer Explanation */
+.answer-explain {
+  margin-top: 24px;
+  padding: 24px;
+  border-radius: 20px;
+  background: #fff;
+  border: 1px solid var(--border);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: all 0.5s var(--ease);
+  max-height: 0;
+  overflow: hidden;
+}
+.answer-explain.show {
+  opacity: 1;
+  transform: translateY(0);
+  max-height: 200px;
+  margin-top: 24px;
+  padding: 24px;
+}
+.answer-explain h5 {
+  font-size: 13px; font-weight: 600; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;
+}
+.answer-explain p {
+  font-size: 14px; color: var(--text-secondary); line-height: 1.6;
+}
+
+/* Progress dots */
+.quiz-progress-bar {
+  display: flex; align-items: center; gap: 6px; margin-bottom: 32px;
+}
+.quiz-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: rgba(0,0,0,0.08);
+  transition: all 0.4s var(--ease);
+}
+.quiz-dot.done { background: var(--accent); }
+.quiz-dot.current { background: var(--accent); transform: scale(1.4); }
+
+.quiz-actions {
+  text-align: center; margin-top: 32px;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+/* ==================== 5. LEARNING CENTER — Data Growth Animation ==================== */
 .growth-narrative {
   border-radius: var(--radius-lg); padding: 48px;
   background: #000; color: #f5f5f7; margin-top: 64px;
@@ -263,10 +664,28 @@ body { font-family: var(--font-sans); color: var(--text-primary); background: va
   border-radius: var(--radius-md); padding: 20px;
   background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.06);
 }
-.growth-stat-value { font-family: var(--font-serif); font-size: 32px; font-weight: 700; letter-spacing: -0.02em; }
+.growth-stat-value {
+  font-family: var(--font-serif); font-size: 32px; font-weight: 700;
+  letter-spacing: -0.02em;
+}
 .growth-stat-label { font-size: 13px; color: #86868b; margin-top: 4px; }
 
-/* ==================== AI ASSISTANT SECTION ==================== */
+/* Heatmap */
+.heatmap {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 24px;
+}
+.heatmap-cell {
+  aspect-ratio: 1; border-radius: 4px;
+  background: rgba(255,255,255,0.04);
+  transition: background 0.6s var(--ease);
+}
+.heatmap-cell.lit-1 { background: rgba(20,184,166,0.15); }
+.heatmap-cell.lit-2 { background: rgba(20,184,166,0.3); }
+.heatmap-cell.lit-3 { background: rgba(20,184,166,0.5); }
+.heatmap-cell.lit-4 { background: rgba(20,184,166,0.7); }
+.heatmap-cell.lit-5 { background: rgba(20,184,166,0.9); }
+
+/* ==================== 6. AI ASSISTANT — Thinking + Typing ==================== */
 .ai-section-grid {
   display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 64px;
 }
@@ -287,41 +706,82 @@ body { font-family: var(--font-sans); color: var(--text-primary); background: va
 .ai-msg.bot .ai-bubble { background: #fff; border: 1px solid var(--border); border-top-left-radius: 4px; }
 .ai-msg.user .ai-bubble { background: var(--text-primary); color: #fff; border-top-right-radius: 4px; }
 
+/* Thinking animation */
+.thinking-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 16px;
+  border-radius: 18px;
+  background: #fff;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 14px;
+  max-width: 90%;
+}
+.thinking-card span {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent);
+  animation: thinkingDot 1.2s ease-in-out infinite;
+}
+.thinking-card span:nth-child(2) { animation-delay: 0.15s; }
+.thinking-card span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes thinkingDot {
+  0%, 80%, 100% { transform: scale(0.8); opacity: 0.4; }
+  40% { transform: scale(1.2); opacity: 1; }
+}
+
+/* Source tags */
+.source-tags {
+  display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px;
+}
+.source-tag {
+  padding: 4px 10px; border-radius: 999px;
+  background: rgba(20,184,166,0.08);
+  color: var(--accent-dark);
+  font-size: 11px; font-weight: 500;
+}
+
+/* Typing cursor */
+.typing-cursor {
+  display: inline-block;
+  width: 2px; height: 1em;
+  background: var(--accent);
+  animation: blink 0.8s step-end infinite;
+  vertical-align: text-bottom;
+  margin-left: 2px;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Follow-up buttons */
+.follow-up-btns {
+  display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;
+}
+.follow-up-btn {
+  padding: 8px 14px; border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #fff;
+  font-size: 12px; font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+  font-family: var(--font-sans);
+  color: var(--text-secondary);
+}
+.follow-up-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 .ai-feature-card {
   border-radius: var(--radius-lg); padding: 36px;
   background: var(--bg-soft); border: 1px solid var(--border);
 }
 .ai-feature-card h4 { font-family: var(--font-serif); font-size: 20px; font-weight: 600; margin-bottom: 8px; }
 .ai-feature-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
-
-/* ==================== QUIZ SECTION ==================== */
-.quiz-scene {
-  margin-top: 64px; max-width: 680px; margin-left: auto; margin-right: auto;
-}
-.quiz-card-main {
-  border-radius: var(--radius-lg); background: var(--bg-soft);
-  border: 1px solid var(--border); padding: 48px;
-}
-.quiz-q {
-  font-family: var(--font-serif); font-size: 26px; font-weight: 600;
-  line-height: 1.3; letter-spacing: -0.02em; margin-bottom: 32px;
-}
-.quiz-opts { display: flex; flex-direction: column; gap: 10px; }
-.quiz-opt {
-  padding: 16px 20px; border-radius: var(--radius-sm);
-  border: 1px solid var(--border); background: #fff;
-  font-size: 15px; font-weight: 500; cursor: pointer;
-  transition: all 0.25s var(--ease); font-family: var(--font-sans);
-  text-align: left; display: flex; align-items: center; gap: 12px;
-}
-.quiz-opt:hover { border-color: var(--accent); }
-.quiz-opt.selected { border-color: var(--accent); background: rgba(20,184,166,0.04); }
-.quiz-opt .letter {
-  width: 24px; height: 24px; border-radius: 50%;
-  background: var(--bg-soft); display: flex; align-items: center; justify-content: center;
-  font-size: 12px; font-weight: 600; flex-shrink: 0;
-}
-.quiz-opt.selected .letter { background: var(--accent); color: #fff; }
 
 /* ==================== CTA SECTION ==================== */
 .cta-section {
@@ -357,12 +817,15 @@ body { font-family: var(--font-sans); color: var(--text-primary); background: va
 @media (max-width: 1024px) {
   .bento { grid-template-columns: repeat(2, 1fr); }
   .bento-span2 { grid-column: span 2; }
-  .classroom-scene { grid-template-columns: 1fr; }
+  .ai-evaluation-card { grid-template-columns: 1fr; }
   .ai-section-grid { grid-template-columns: 1fr; }
   .ai-chat-mockup { grid-row: auto; }
   .graph-mockup { grid-template-columns: 1fr; }
   .graph-side, .graph-detail { display: none; }
   .growth-narrative { grid-template-columns: 1fr; }
+  .hero-product-demo { grid-template-columns: 1fr; }
+  .ai-flow-line { display: none; }
+  .knowledge-mini-graph { display: none; }
 }
 @media (max-width: 768px) {
   .bento { grid-template-columns: 1fr; }
@@ -370,6 +833,14 @@ body { font-family: var(--font-sans); color: var(--text-primary); background: va
   .section { padding: 100px 24px; }
   .hero { padding: 100px 24px 60px; }
   .nav-link { padding: 6px 10px; font-size: 11px; }
+  .hero-product-demo { padding: 24px; }
+  .book-page { padding: 20px; min-height: 160px; }
+  .book-page p { font-size: 15px; line-height: 1.7; }
+  .token-1 { left: 20px; top: 72px; }
+  .token-2 { left: 96px; top: 72px; }
+  .token-3 { left: 20px; top: 112px; }
+  .quiz-opts { gap: 8px; }
+  .quiz-opt { padding: 14px 16px; font-size: 14px; }
 }
 </style>
 </head>
@@ -391,7 +862,7 @@ body { font-family: var(--font-sans); color: var(--text-primary); background: va
   </div>
 </nav>
 
-<!-- ==================== 1. HERO ==================== -->
+<!-- ==================== 1. HERO — With Book→Graph Demo ==================== -->
 <section class="hero" id="hero">
   <h1>美育智能体。<br>让艺术知识，<span class="accent">变得可探索。</span></h1>
   <p class="hero-sub">从书法、绘画、戏曲到建筑工艺，AI 帮助学生看见知识之间的关系，进入更自然的美育学习体验。</p>
@@ -400,61 +871,111 @@ body { font-family: var(--font-sans); color: var(--text-primary); background: va
     <a class="btn btn-ghost" href="#classroom">体验 AI 课堂</a>
   </div>
 
-  <!-- Product Mockup -->
-  <div class="mockup">
+  <!-- ★ Functional Animation: Book → Tokens → Knowledge Graph -->
+  <div class="hero-product-demo">
+    <div class="book-page">
+      <p>王羲之的《兰亭序》体现了魏晋书法的自然、流动与生命意识。</p>
+      <span class="token token-1">王羲之</span>
+      <span class="token token-2">兰亭序</span>
+      <span class="token token-3">魏晋书法</span>
+    </div>
+    <div class="ai-flow-line"></div>
+    <div class="knowledge-mini-graph">
+      <div class="kg-line kg-line-1"></div>
+      <div class="kg-line kg-line-2"></div>
+      <div class="kg-line kg-line-3"></div>
+      <div class="kg-node center">兰亭序</div>
+      <div class="kg-node n1">王羲之</div>
+      <div class="kg-node n2">行书</div>
+      <div class="kg-node n3">魏晋美学</div>
+    </div>
+    <div class="demo-label">AI 正在将<strong>教材内容</strong>结构化为<strong>知识图谱</strong></div>
+  </div>
+</section>
+
+<!-- ==================== 2. KNOWLEDGE GRAPH — With Click-to-Expand ==================== -->
+<section class="section" id="graph">
+  <div class="reveal">
+    <div class="section-label">Knowledge Graph</div>
+    <div class="section-title">把一本书，变成一张知识地图。</div>
+    <div class="section-desc">AI 自动识别章节、概念、作品、人物与美学关系，让隐含的知识显性化、可探索。</div>
+  </div>
+
+  <!-- ★ Interactive Graph with expandable nodes -->
+  <div class="mockup reveal" style="opacity:1;transform:none;animation:none;margin-top:64px;">
     <div class="mockup-bar">
       <div class="mockup-dot"></div><div class="mockup-dot"></div><div class="mockup-dot"></div>
     </div>
-    <div class="mockup-body">
+    <div class="mockup-body" style="position:relative;">
       <div class="graph-mockup">
         <div class="graph-side">
-          <div class="graph-side-item active">书法</div>
-          <div class="graph-side-item">绘画</div>
-          <div class="graph-side-item">戏曲</div>
-          <div class="graph-side-item">音乐</div>
-          <div class="graph-side-item">建筑</div>
-          <div class="graph-side-item">工艺</div>
+          <div class="graph-side-item active" onclick="switchGraphCategory(this,'calligraphy')">书法</div>
+          <div class="graph-side-item" onclick="switchGraphCategory(this,'painting')">绘画</div>
+          <div class="graph-side-item" onclick="switchGraphCategory(this,'opera')">戏曲</div>
+          <div class="graph-side-item" onclick="switchGraphCategory(this,'music')">音乐</div>
+          <div class="graph-side-item" onclick="switchGraphCategory(this,'architecture')">建筑</div>
+          <div class="graph-side-item" onclick="switchGraphCategory(this,'craft')">工艺</div>
         </div>
-        <div class="graph-canvas">
+        <div class="graph-canvas" id="graphCanvas" onclick="handleGraphClick(event)">
           <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
-            <!-- Connection lines -->
+            <!-- Main connections -->
             <line x1="250" y1="180" x2="130" y2="70" stroke="#e5e5e5" stroke-width="1"/>
             <line x1="250" y1="180" x2="400" y2="90" stroke="#e5e5e5" stroke-width="1"/>
             <line x1="250" y1="180" x2="420" y2="250" stroke="#e5e5e5" stroke-width="1"/>
             <line x1="250" y1="180" x2="250" y2="330" stroke="#e5e5e5" stroke-width="1"/>
             <line x1="250" y1="180" x2="80" y2="280" stroke="#e5e5e5" stroke-width="1"/>
             <line x1="250" y1="180" x2="100" y2="140" stroke="#e5e5e5" stroke-width="1"/>
-            <!-- Sub-connections -->
-            <line x1="130" y1="70" x2="60" y2="40" stroke="#f0f0f0" stroke-width="0.8"/>
-            <line x1="130" y1="70" x2="180" y2="30" stroke="#f0f0f0" stroke-width="0.8"/>
-            <line x1="400" y1="90" x2="460" y2="50" stroke="#f0f0f0" stroke-width="0.8"/>
-            <line x1="400" y1="90" x2="450" y2="140" stroke="#f0f0f0" stroke-width="0.8"/>
+            <!-- Sub-connections (hidden initially) -->
+            <g class="sub-node">
+              <line x1="130" y1="70" x2="60" y2="40" stroke="#14B8A6" stroke-width="0.8" opacity="0.4"/>
+              <circle cx="60" cy="40" r="8" fill="rgba(20,184,166,0.2)"/>
+              <text x="60" y="44" text-anchor="middle" fill="#0d9488" font-size="6">快雪帖</text>
+            </g>
+            <g class="sub-node">
+              <line x1="130" y1="70" x2="180" y2="30" stroke="#14B8A6" stroke-width="0.8" opacity="0.4"/>
+              <circle cx="180" cy="30" r="8" fill="rgba(20,184,166,0.2)"/>
+              <text x="180" y="34" text-anchor="middle" fill="#0d9488" font-size="6">十七帖</text>
+            </g>
+            <g class="sub-node">
+              <line x1="400" y1="90" x2="460" y2="50" stroke="#14B8A6" stroke-width="0.8" opacity="0.4"/>
+              <circle cx="460" cy="50" r="8" fill="rgba(20,184,166,0.2)"/>
+              <text x="460" y="54" text-anchor="middle" fill="#0d9488" font-size="6">天下第一</text>
+            </g>
+            <g class="sub-node">
+              <line x1="400" y1="90" x2="450" y2="140" stroke="#14B8A6" stroke-width="0.8" opacity="0.4"/>
+              <circle cx="450" cy="140" r="8" fill="rgba(20,184,166,0.2)"/>
+              <text x="450" y="144" text-anchor="middle" fill="#0d9488" font-size="6">行书典范</text>
+            </g>
+            <g class="sub-node">
+              <line x1="100" y1="140" x2="40" y2="160" stroke="#14B8A6" stroke-width="0.8" opacity="0.4"/>
+              <circle cx="40" cy="160" r="8" fill="rgba(20,184,166,0.2)"/>
+              <text x="40" y="164" text-anchor="middle" fill="#0d9488" font-size="6">颜体</text>
+            </g>
             <!-- Center node -->
             <circle cx="250" cy="180" r="28" fill="#14B8A6" opacity="0.12"/>
-            <circle cx="250" cy="180" r="16" fill="#14B8A6"/>
-            <text x="250" y="184" text-anchor="middle" fill="#fff" font-size="9" font-weight="600">书法</text>
-            <!-- Surrounding nodes -->
-            <circle cx="130" cy="70" r="14" fill="#1d1d1f"/>
-            <text x="130" y="74" text-anchor="middle" fill="#fff" font-size="8">王羲之</text>
-            <circle cx="400" cy="90" r="14" fill="#1d1d1f"/>
-            <text x="400" y="94" text-anchor="middle" fill="#fff" font-size="8">兰亭序</text>
-            <circle cx="420" cy="250" r="12" fill="#6e6e73"/>
-            <text x="420" y="254" text-anchor="middle" fill="#fff" font-size="7">笔法</text>
+            <circle cx="250" cy="180" r="16" fill="#14B8A6" style="cursor:pointer"/>
+            <text x="250" y="184" text-anchor="middle" fill="#fff" font-size="9" font-weight="600" style="cursor:pointer">书法</text>
+            <!-- Surrounding nodes (clickable) -->
+            <g style="cursor:pointer" onclick="expandNode('wangxizhi')">
+              <circle cx="130" cy="70" r="14" fill="#1d1d1f"/>
+              <text x="130" y="74" text-anchor="middle" fill="#fff" font-size="8">王羲之</text>
+            </g>
+            <g style="cursor:pointer" onclick="expandNode('lantingxu')">
+              <circle cx="400" cy="90" r="14" fill="#1d1d1f"/>
+              <text x="400" y="94" text-anchor="middle" fill="#fff" font-size="8">兰亭序</text>
+            </g>
+            <g style="cursor:pointer" onclick="expandNode('bifa')">
+              <circle cx="420" cy="250" r="12" fill="#6e6e73"/>
+              <text x="420" y="254" text-anchor="middle" fill="#fff" font-size="7">笔法</text>
+            </g>
             <circle cx="250" cy="330" r="12" fill="#6e6e73"/>
             <text x="250" y="334" text-anchor="middle" fill="#fff" font-size="7">行书</text>
             <circle cx="80" cy="280" r="12" fill="#6e6e73"/>
             <text x="80" y="284" text-anchor="middle" fill="#fff" font-size="7">魏晋</text>
-            <circle cx="100" cy="140" r="12" fill="#6e6e73"/>
-            <text x="100" y="144" text-anchor="middle" fill="#fff" font-size="7">楷书</text>
-            <!-- Leaf nodes -->
-            <circle cx="60" cy="40" r="8" fill="#e5e5e5"/>
-            <text x="60" y="44" text-anchor="middle" fill="#6e6e73" font-size="6">快雪</text>
-            <circle cx="180" cy="30" r="8" fill="#e5e5e5"/>
-            <text x="180" y="34" text-anchor="middle" fill="#6e6e73" font-size="6">十七帖</text>
-            <circle cx="460" cy="50" r="8" fill="#e5e5e5"/>
-            <text x="460" y="54" text-anchor="middle" fill="#6e6e73" font-size="6">天下第一</text>
-            <circle cx="450" cy="140" r="8" fill="#e5e5e5"/>
-            <text x="450" y="144" text-anchor="middle" fill="#6e6e73" font-size="6">行书典范</text>
+            <g style="cursor:pointer" onclick="expandNode('kaishu')">
+              <circle cx="100" cy="140" r="12" fill="#6e6e73"/>
+              <text x="100" y="144" text-anchor="middle" fill="#fff" font-size="7">楷书</text>
+            </g>
           </svg>
         </div>
         <div class="graph-detail">
@@ -472,108 +993,61 @@ body { font-family: var(--font-sans); color: var(--text-primary); background: va
           </div>
         </div>
       </div>
+
+      <!-- ★ Click-to-expand detail panel -->
+      <div class="graph-detail-panel" id="graphDetailPanel">
+        <div class="panel-label">当前知识点</div>
+        <h3 id="panelTitle">书法艺术</h3>
+        <p id="panelDesc">系统已识别 1,248 个相关知识点，关联人物、作品、风格、技法与时代背景。</p>
+        <div class="panel-tags">
+          <span id="ptag1">王羲之</span>
+          <span id="ptag2">兰亭序</span>
+          <span id="ptag3">行书</span>
+          <span id="ptag4">永字八法</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ==================== 2. KNOWLEDGE GRAPH ==================== -->
-<section class="section" id="graph">
-  <div class="reveal">
-    <div class="section-label">Knowledge Graph</div>
-    <div class="section-title">把一本书，变成一张知识地图。</div>
-    <div class="section-desc">AI 自动识别章节、概念、作品、人物与美学关系，让隐含的知识显性化、可探索。</div>
-  </div>
-  <div class="bento reveal">
-    <div class="bento-card bento-light bento-span2">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
-        <svg class="icon-md" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/><path d="m4.93 4.93 2.83 2.83m8.48 8.48 2.83 2.83m0-17.14-2.83 2.83m-8.48 8.48-2.83 2.83"/></svg>
-        <h3>知识结构化识别</h3>
-      </div>
-      <p>词元驱动引擎自动提取美育知识，构建可交互的知识图谱。</p>
-      <div class="mini-graph">
-        <div class="mini-node" style="background:var(--accent);color:#fff;font-size:10px;">王羲之</div>
-        <div class="mini-line"></div>
-        <div class="mini-node" style="background:var(--bg);border:1px solid var(--border);font-size:10px;">兰亭序</div>
-        <div class="mini-line"></div>
-        <div class="mini-node" style="background:var(--bg);border:1px solid var(--border);font-size:10px;">行书</div>
-        <div class="mini-line"></div>
-        <div class="mini-node" style="background:var(--bg);border:1px solid var(--border);font-size:10px;">笔法</div>
-      </div>
-    </div>
-    <div class="bento-card bento-light">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
-        <svg class="icon-md" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-        <h3>个性化路径</h3>
-      </div>
-      <p>根据学习进度与兴趣，智能推荐下一步。</p>
-    </div>
-    <div class="bento-card bento-light">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
-        <svg class="icon-md" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-        <h3>学习测评</h3>
-      </div>
-      <p>游戏化问答，让知识巩固变成趣味挑战。</p>
-    </div>
-    <div class="bento-card bento-dark">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
-        <svg class="icon-md" viewBox="0 0 24 24" style="stroke:#5EEAD4"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
-        <h3>AI 伴学助手</h3>
-      </div>
-      <p>你的美学导游，随时问答、创作指导与学习规划。</p>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== 3. AI CLASSROOM ==================== -->
+<!-- ==================== 3. AI CLASSROOM — With Scan + Evaluate ==================== -->
 <section class="section section-soft" id="classroom">
   <div class="reveal">
     <div class="section-label">Interactive Classroom</div>
     <div class="section-title">AI 看见你的每一笔。</div>
     <div class="section-desc">学生上传书法作品，AI 标出笔画问题，给出改进建议，生成学习报告。</div>
   </div>
-  <div class="classroom-scene reveal">
-    <div class="canvas-area">
-      <div class="canvas-char">永</div>
-      <div class="canvas-overlay">
-        <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Stylized brush stroke path -->
-          <path d="M60 20 C60 20, 58 50, 60 55 C62 60, 70 58, 80 55" stroke="#14B8A6" stroke-width="2" stroke-linecap="round" fill="none" stroke-dasharray="4 2"/>
-          <path d="M45 55 L75 55" stroke="#14B8A6" stroke-width="2" stroke-linecap="round" fill="none" stroke-dasharray="4 2"/>
-          <path d="M55 55 C55 55, 50 75, 48 85" stroke="#14B8A6" stroke-width="2" stroke-linecap="round" fill="none" stroke-dasharray="4 2"/>
-          <path d="M65 55 C65 55, 75 70, 85 80" stroke="#14B8A6" stroke-width="2" stroke-linecap="round" fill="none" stroke-dasharray="4 2"/>
-          <!-- AI annotation dots -->
-          <circle cx="60" cy="38" r="4" fill="#14B8A6" opacity="0.6"/>
-          <circle cx="60" cy="55" r="4" fill="#14B8A6" opacity="0.6"/>
-          <circle cx="50" cy="75" r="4" fill="#14B8A6" opacity="0.6"/>
-        </svg>
-        <p style="font-size:14px;color:var(--text-tertiary);">AI 正在分析笔法结构…</p>
-      </div>
+
+  <!-- ★ Functional Animation: AI Scan + Evaluate -->
+  <div class="ai-evaluation-card reveal" id="classroomCard">
+    <div class="writing-canvas">
+      <div class="scan-line" id="scanLine"></div>
+      <div class="mark mark-coral mark-1">横画偏斜</div>
+      <div class="mark mark-coral mark-2">结构偏右</div>
+      <div class="mark mark-accent mark-3">捺法优秀</div>
     </div>
-    <div class="ai-panel">
-      <div class="ai-score-card">
-        <h5>笔画评分</h5>
-        <div class="ai-score-value">87</div>
-        <div class="ai-score-bar"><div class="ai-score-fill" style="width:87%"></div></div>
+    <div class="evaluation-panel">
+      <h4>AI 书写评价</h4>
+      <div class="score-row">
+        <span>笔画稳定性</span>
+        <div class="score-bar"><i style="--w:82%" id="score1"></i></div>
       </div>
-      <div class="ai-score-card">
-        <h5>结构评分</h5>
-        <div class="ai-score-value">72</div>
-        <div class="ai-score-bar"><div class="ai-score-fill" style="width:72%"></div></div>
+      <div class="score-row">
+        <span>结构协调度</span>
+        <div class="score-bar"><i style="--w:76%" id="score2"></i></div>
       </div>
-      <div class="ai-score-card">
-        <h5>章法评分</h5>
-        <div class="ai-score-value">91</div>
-        <div class="ai-score-bar"><div class="ai-score-fill" style="width:91%"></div></div>
+      <div class="score-row">
+        <span>章法完整度</span>
+        <div class="score-bar"><i style="--w:88%" id="score3"></i></div>
       </div>
-      <div class="ai-suggestion">
-        <h5>AI 建议</h5>
-        <p>横画起笔略重，建议加强中段行笔的稳定性。捺画收笔角度偏大，可参考颜体捺法调整。</p>
+      <div class="ai-suggestion-inline">
+        <strong>AI 建议：</strong>横画起笔略重，建议加强中段行笔的稳定性。捺画收笔角度偏大，可参考颜体捺法调整。
       </div>
     </div>
   </div>
 </section>
 
-<!-- ==================== 4. QUIZ ==================== -->
+<!-- ==================== 4. QUIZ — With Feedback + AI Explanation ==================== -->
 <section class="section" id="quiz">
   <div class="reveal">
     <div class="section-label" style="text-align:center;">Practice</div>
@@ -581,49 +1055,73 @@ body { font-family: var(--font-sans); color: var(--text-primary); background: va
     <div class="section-desc section-desc-center">游戏化测评，让每一次练习都有收获。</div>
   </div>
   <div class="quiz-scene reveal">
+    <!-- ★ Progress dots -->
+    <div class="quiz-progress-bar">
+      <div class="quiz-dot done"></div>
+      <div class="quiz-dot done"></div>
+      <div class="quiz-dot current" id="currentDot"></div>
+      <div class="quiz-dot"></div>
+      <div class="quiz-dot"></div>
+      <div class="quiz-dot"></div>
+      <div class="quiz-dot"></div>
+      <div class="quiz-dot"></div>
+    </div>
     <div class="quiz-card-main">
       <div class="quiz-q">「青绿山水」画派的代表人物是哪两位？</div>
-      <div class="quiz-opts">
-        <button class="quiz-opt" onclick="selectQuizOpt(this)"><span class="letter">A</span>李思训 · 李昭道</button>
+      <div class="quiz-opts" id="quizOpts">
+        <button class="quiz-opt" data-correct="true" onclick="selectQuizOpt(this)"><span class="letter">A</span>李思训 · 李昭道</button>
         <button class="quiz-opt" onclick="selectQuizOpt(this)"><span class="letter">B</span>范宽 · 郭熙</button>
-        <button class="quiz-opt selected" onclick="selectQuizOpt(this)"><span class="letter">C</span>王希孟 · 赵伯驹</button>
+        <button class="quiz-opt" onclick="selectQuizOpt(this)"><span class="letter">C</span>王希孟 · 赵伯驹</button>
         <button class="quiz-opt" onclick="selectQuizOpt(this)"><span class="letter">D</span>黄公望 · 吴镇</button>
       </div>
+      <!-- ★ Answer explanation (hidden initially) -->
+      <div class="answer-explain" id="answerExplain">
+        <h5>AI 解析</h5>
+        <p>青绿山水画派始于唐代，由李思训、李昭道父子创立，以石青石绿为主色调，开创了金碧辉煌的山水画风格。王希孟虽为青绿山水代表画家，但并非画派创始人。范宽、郭熙属北方山水画派，黄公望、吴镇属元四家。</p>
+      </div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-primary" id="confirmBtn" onclick="confirmAnswer()">确认答案 <span class="arrow">→</span></button>
     </div>
   </div>
 </section>
 
-<!-- ==================== 5. LEARNING CENTER ==================== -->
+<!-- ==================== 5. LEARNING CENTER — With Data Growth Animation ==================== -->
 <section class="section section-soft" id="growth">
   <div class="reveal">
     <div class="section-label">Growth</div>
     <div class="section-title">你的成长，看得见。</div>
     <div class="section-desc">不只是数据，更是每一步的进步与发现。</div>
   </div>
-  <div class="growth-narrative reveal">
+  <div class="growth-narrative reveal" id="growthCard">
     <div class="growth-text">
       <h3>本周，你完成了 3 次书法练习。</h3>
       <p>AI 发现你的<span class="highlight">横画稳定性提升了 18%</span>，笔画评分从 72 提升到 87。</p>
       <p>下一步建议进入<span class="highlight">「楷书结构之美」</span>，继续强化间架结构的理解。</p>
     </div>
     <div class="growth-visual">
+      <!-- ★ data-count for number animation -->
       <div class="growth-stat">
-        <div class="growth-stat-value" style="color:var(--accent-light)">128</div>
+        <div class="growth-stat-value" style="color:var(--accent-light)" data-count="128" id="stat1">0</div>
         <div class="growth-stat-label">已学知识点</div>
       </div>
       <div class="growth-stat">
-        <div class="growth-stat-value" style="color:#f5f5f7">92%</div>
+        <div class="growth-stat-value" style="color:#f5f5f7" data-count="92" data-suffix="%" id="stat2">0%</div>
         <div class="growth-stat-label">测评正确率</div>
       </div>
       <div class="growth-stat">
-        <div class="growth-stat-value" style="color:#f5f5f7">15</div>
+        <div class="growth-stat-value" style="color:#f5f5f7" data-count="15" id="stat3">0</div>
         <div class="growth-stat-label">连续学习天数</div>
+      </div>
+      <!-- ★ Heatmap with progressive lighting -->
+      <div class="heatmap" id="heatmap">
+        <!-- Cells generated by JS -->
       </div>
     </div>
   </div>
 </section>
 
-<!-- ==================== 6. AI ASSISTANT ==================== -->
+<!-- ==================== 6. AI ASSISTANT — With Thinking + Typing ==================== -->
 <section class="section" id="ai">
   <div class="reveal">
     <div class="section-label">AI Companion</div>
@@ -631,7 +1129,7 @@ body { font-family: var(--font-sans); color: var(--text-primary); background: va
     <div class="section-desc">小美不只是搜索，是理解你学习状态的伴学助手。</div>
   </div>
   <div class="ai-section-grid reveal">
-    <div class="ai-chat-mockup">
+    <div class="ai-chat-mockup" id="aiChatMockup">
       <div class="ai-msg bot">
         <div class="ai-avatar bot">美</div>
         <div class="ai-bubble">你好，我是小美。今天想探索什么？</div>
@@ -640,9 +1138,27 @@ body { font-family: var(--font-sans); color: var(--text-primary); background: va
         <div class="ai-avatar human">我</div>
         <div class="ai-bubble">帮我分析一下《千里江山图》的构图</div>
       </div>
-      <div class="ai-msg bot">
+      <!-- ★ Thinking animation -->
+      <div class="thinking-card" id="thinkingCard">
+        <span></span><span></span><span></span>
+        正在检索《书法艺术》《中国美术史》《闽台戏曲文化》知识库
+      </div>
+      <!-- ★ AI response with typing effect -->
+      <div class="ai-msg bot" id="aiResponse" style="display:none;">
         <div class="ai-avatar bot">美</div>
-        <div class="ai-bubble">《千里江山图》构图有三大特点：<strong>散点透视</strong>——移步换景，突破单一视点；<strong>三远法并用</strong>——高远、深远、平远巧妙交织；<strong>青绿设色</strong>——石青石绿层层积染，形成经典范式。</div>
+        <div class="ai-bubble">
+          <span id="typingText"></span><span class="typing-cursor" id="typingCursor"></span>
+          <div class="source-tags" id="sourceTags" style="display:none;">
+            <span class="source-tag">《中国美术史》</span>
+            <span class="source-tag">《青绿山水研究》</span>
+            <span class="source-tag">《宋代绘画》</span>
+          </div>
+          <div class="follow-up-btns" id="followUpBtns" style="display:none;">
+            <button class="follow-up-btn">继续学习</button>
+            <button class="follow-up-btn">生成练习题</button>
+            <button class="follow-up-btn">加入知识库</button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="ai-feature-card">
@@ -710,7 +1226,6 @@ navLinks.forEach(function(link) {
       var top = target.getBoundingClientRect().top + window.pageYOffset - offset;
       window.scrollTo({ top: top, behavior: 'smooth' });
     }
-    // Update active
     navLinks.forEach(function(l) { l.classList.remove('active'); });
     this.classList.add('active');
   });
@@ -730,26 +1245,9 @@ window.addEventListener('scroll', function() {
       if (active) active.classList.add('active');
     }
   });
-  // Nav scroll effect
   var nav = document.getElementById('mainNav');
   if (scrollY > 10) { nav.classList.add('scrolled'); }
   else { nav.classList.remove('scrolled'); }
-});
-
-// ========== Quiz ==========
-function selectQuizOpt(btn) {
-  var opts = document.querySelectorAll('.quiz-opt');
-  for (var i = 0; i < opts.length; i++) { opts[i].classList.remove('selected'); }
-  btn.classList.add('selected');
-}
-
-// ========== Graph Side Nav ==========
-var graphSideItems = document.querySelectorAll('.graph-side-item');
-graphSideItems.forEach(function(item) {
-  item.addEventListener('click', function() {
-    graphSideItems.forEach(function(i) { i.classList.remove('active'); });
-    this.classList.add('active');
-  });
 });
 
 // ========== Scroll Reveal ==========
@@ -763,12 +1261,258 @@ function initReveal() {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
+        // ★ Trigger functional animations when sections become visible
+        triggerSectionAnimation(entry.target);
       }
     });
-  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
   reveals.forEach(function(el) { observer.observe(el); });
 }
 initReveal();
+
+// ========== ★ 2. Knowledge Graph — Click to Expand ==========
+var graphExpanded = false;
+
+function expandNode(nodeId) {
+  var canvas = document.getElementById('graphCanvas');
+  var panel = document.getElementById('graphDetailPanel');
+
+  // Toggle sub-nodes
+  if (graphExpanded) {
+    canvas.classList.remove('expanded');
+    panel.classList.remove('active');
+    graphExpanded = false;
+    return;
+  }
+
+  canvas.classList.add('expanded');
+  panel.classList.add('active');
+  graphExpanded = true;
+
+  // Update panel content based on node
+  var nodeData = {
+    'wangxizhi': { title: '王羲之', desc: '东晋书法家，被尊为「书圣」。系统已识别 847 个相关知识点。', tags: ['兰亭序', '行书', '快雪时晴帖', '魏晋美学'] },
+    'lantingxu': { title: '兰亭序', desc: '天下第一行书，王羲之于永和九年所作。系统已识别 623 个相关知识点。', tags: ['王羲之', '永和九年', '行书典范', '魏晋风度'] },
+    'bifa': { title: '笔法', desc: '书法技法体系，含用笔、运腕、结字等方法论。系统已识别 456 个相关知识点。', tags: ['中锋', '侧锋', '藏锋', '永字八法'] },
+    'kaishu': { title: '楷书', desc: '汉字主要书体之一，形体方正，笔画平直。系统已识别 534 个相关知识点。', tags: ['颜体', '柳体', '欧体', '赵体'] }
+  };
+
+  var data = nodeData[nodeId] || nodeData['wangxizhi'];
+  document.getElementById('panelTitle').textContent = data.title;
+  document.getElementById('panelDesc').textContent = data.desc;
+  document.getElementById('ptag1').textContent = data.tags[0];
+  document.getElementById('ptag2').textContent = data.tags[1];
+  document.getElementById('ptag3').textContent = data.tags[2];
+  document.getElementById('ptag4').textContent = data.tags[3];
+}
+
+function handleGraphClick(event) {
+  // Close panel if clicking on empty canvas space
+  if (event.target.tagName === 'svg' || event.target.classList.contains('graph-canvas')) {
+    var canvas = document.getElementById('graphCanvas');
+    var panel = document.getElementById('graphDetailPanel');
+    canvas.classList.remove('expanded');
+    panel.classList.remove('active');
+    graphExpanded = false;
+  }
+}
+
+function switchGraphCategory(el, category) {
+  var items = document.querySelectorAll('.graph-side-item');
+  items.forEach(function(i) { i.classList.remove('active'); });
+  el.classList.add('active');
+  // Reset expanded state
+  var canvas = document.getElementById('graphCanvas');
+  var panel = document.getElementById('graphDetailPanel');
+  canvas.classList.remove('expanded');
+  panel.classList.remove('active');
+  graphExpanded = false;
+}
+
+// ========== ★ 3. Classroom — Animate Score Bars on Scroll ==========
+var classroomAnimated = false;
+
+function animateClassroomScores() {
+  if (classroomAnimated) return;
+  classroomAnimated = true;
+
+  var score1 = document.getElementById('score1');
+  var score2 = document.getElementById('score2');
+  var score3 = document.getElementById('score3');
+
+  setTimeout(function() { if (score1) score1.classList.add('animated'); }, 400);
+  setTimeout(function() { if (score2) score2.classList.add('animated'); }, 600);
+  setTimeout(function() { if (score3) score3.classList.add('animated'); }, 800);
+}
+
+// ========== ★ 4. Quiz — Answer Feedback ==========
+var quizAnswered = false;
+
+function selectQuizOpt(btn) {
+  if (quizAnswered) return;
+  var opts = document.querySelectorAll('.quiz-opt');
+  for (var i = 0; i < opts.length; i++) {
+    opts[i].classList.remove('selected');
+  }
+  btn.classList.add('selected');
+}
+
+function confirmAnswer() {
+  if (quizAnswered) return;
+  var selected = document.querySelector('.quiz-opt.selected');
+  if (!selected) return;
+
+  quizAnswered = true;
+  var isCorrect = selected.getAttribute('data-correct') === 'true';
+
+  // Mark correct/wrong
+  var opts = document.querySelectorAll('.quiz-opt');
+  for (var i = 0; i < opts.length; i++) {
+    if (opts[i].getAttribute('data-correct') === 'true') {
+      opts[i].classList.add('correct');
+    } else if (opts[i].classList.contains('selected') && !isCorrect) {
+      opts[i].classList.add('wrong');
+    }
+    opts[i].style.pointerEvents = 'none';
+  }
+
+  // Show explanation
+  var explain = document.getElementById('answerExplain');
+  setTimeout(function() {
+    explain.classList.add('show');
+  }, 500);
+
+  // Advance progress dot
+  var currentDot = document.getElementById('currentDot');
+  if (currentDot) {
+    currentDot.classList.remove('current');
+    currentDot.classList.add('done');
+    var nextDot = currentDot.nextElementSibling;
+    if (nextDot) nextDot.classList.add('current');
+  }
+
+  // Update button
+  var btn = document.getElementById('confirmBtn');
+  btn.textContent = '下一题 →';
+  btn.onclick = function() { /* placeholder for next question */ };
+}
+
+// ========== ★ 5. Learning Center — Number Animation + Heatmap ==========
+var growthAnimated = false;
+
+function animateNumbers() {
+  var elements = document.querySelectorAll('[data-count]');
+  elements.forEach(function(el) {
+    var target = Number(el.dataset.count);
+    var suffix = el.dataset.suffix || '';
+    var current = 0;
+    var step = Math.ceil(target / 40);
+    var timer = setInterval(function() {
+      current += step;
+      if (current >= target) {
+        current = target;
+        clearInterval(timer);
+      }
+      el.textContent = current + suffix;
+    }, 24);
+  });
+}
+
+function generateHeatmap() {
+  var heatmap = document.getElementById('heatmap');
+  if (!heatmap || heatmap.children.length > 0) return;
+
+  // Generate 28 cells (4 weeks)
+  var levels = [0, 1, 2, 3, 4, 5];
+  for (var i = 0; i < 28; i++) {
+    var cell = document.createElement('div');
+    cell.className = 'heatmap-cell';
+    heatmap.appendChild(cell);
+  }
+
+  // Progressive lighting with staggered delay
+  var cells = heatmap.querySelectorAll('.heatmap-cell');
+  var pattern = [0,2,0,3,4,1,5, 2,4,1,5,3,0,2, 1,3,5,2,4,0,3, 4,2,5,1,3,0,4];
+  cells.forEach(function(cell, i) {
+    setTimeout(function() {
+      var level = pattern[i] || 0;
+      if (level > 0) {
+        cell.classList.add('lit-' + level);
+      }
+    }, 80 * i);
+  });
+}
+
+// ========== ★ 6. AI Assistant — Thinking + Typing Animation ==========
+var aiChatAnimated = false;
+var fullResponse = '《千里江山图》构图有三大特点：散点透视——移步换景，突破单一视点；三远法并用——高远、深远、平远巧妙交织；青绿设色——石青石绿层层积染，形成经典范式。';
+
+function animateAIChat() {
+  if (aiChatAnimated) return;
+  aiChatAnimated = true;
+
+  var thinkingCard = document.getElementById('thinkingCard');
+  var aiResponse = document.getElementById('aiResponse');
+  var typingText = document.getElementById('typingText');
+  var sourceTags = document.getElementById('sourceTags');
+  var followUpBtns = document.getElementById('followUpBtns');
+  var typingCursor = document.getElementById('typingCursor');
+
+  // Step 1: Show thinking (already visible)
+  // Step 2: After 2s, hide thinking, show response with typing
+  setTimeout(function() {
+    thinkingCard.style.display = 'none';
+    aiResponse.style.display = 'flex';
+
+    // Typing effect
+    var charIndex = 0;
+    var typingInterval = setInterval(function() {
+      if (charIndex < fullResponse.length) {
+        typingText.textContent += fullResponse[charIndex];
+        charIndex++;
+      } else {
+        clearInterval(typingInterval);
+        // Hide cursor after typing
+        setTimeout(function() {
+          typingCursor.style.display = 'none';
+          // Show source tags
+          sourceTags.style.display = 'flex';
+          // Show follow-up buttons
+          setTimeout(function() {
+            followUpBtns.style.display = 'flex';
+          }, 300);
+        }, 400);
+      }
+    }, 35);
+  }, 2500);
+}
+
+// ========== ★ Trigger Section-Specific Animations on Reveal ==========
+function triggerSectionAnimation(element) {
+  var section = element.closest('section');
+  if (!section) return;
+
+  var sectionId = section.getAttribute('id');
+
+  switch (sectionId) {
+    case 'classroom':
+      animateClassroomScores();
+      break;
+    case 'growth':
+      if (!growthAnimated) {
+        growthAnimated = true;
+        setTimeout(animateNumbers, 300);
+        setTimeout(generateHeatmap, 500);
+      }
+      break;
+    case 'ai':
+      animateAIChat();
+      break;
+  }
+}
+
+// ========== ★ Initial setup: Hide thinking card, start AI animation later ==========
+// The thinking card is visible by default, AI chat animation triggers on scroll reveal
 </script>
 
 </body>
