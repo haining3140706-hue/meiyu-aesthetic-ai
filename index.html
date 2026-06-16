@@ -1,0 +1,1868 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>海峡美育智能体</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=Noto+Serif+SC:wght@400;500;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   海峡美育智能体 — Apple-Grade Design System
+   Design Language: 新中式极简 × Cupertino Elegance
+   ============================================================ */
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --teal: #14B8A6;
+  --teal-light: #5EEAD4;
+  --teal-dark: #0D9488;
+  --violet: #8B5CF6;
+  --violet-light: #A78BFA;
+  --coral: #F97316;
+  --coral-light: #FDBA74;
+  --bg: #ffffff;
+  --bg-warm: #FFFBF5;
+  --bg-dark: #1d1d1f;
+  --bg-card: rgba(255,255,255,0.72);
+  --text-primary: #1d1d1f;
+  --text-secondary: #6e6e73;
+  --text-tertiary: #86868b;
+  --border: rgba(0,0,0,0.08);
+  --border-light: rgba(0,0,0,0.04);
+  --glass: rgba(255,255,255,0.65);
+  --glass-border: rgba(255,255,255,0.35);
+  --glass-dark: rgba(29,29,31,0.75);
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 28px;
+  --radius-xl: 40px;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 24px rgba(0,0,0,0.06);
+  --shadow-lg: 0 12px 48px rgba(0,0,0,0.08);
+  --shadow-xl: 0 24px 80px rgba(0,0,0,0.12);
+  --font-serif: 'Noto Serif SC', 'Georgia', serif;
+  --font-sans: 'Noto Sans SC', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  background: var(--bg);
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+/* ==================== NAVIGATION — Frosted Glass ==================== */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 max(24px, calc((100vw - 1200px) / 2));
+  background: var(--glass);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--border-light);
+  transition: background 0.5s var(--ease);
+}
+
+.nav.scrolled {
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 0.5px 0 rgba(0,0,0,0.08);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--text-primary);
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: inherit;
+}
+
+.nav-logo-icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 16px; font-weight: 700;
+  box-shadow: 0 2px 8px rgba(20,184,166,0.3);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-link {
+  padding: 8px 16px;
+  border-radius: 980px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+  border: none;
+  background: none;
+  font-family: var(--font-sans);
+  letter-spacing: -0.01em;
+  position: relative;
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+  background: rgba(0,0,0,0.04);
+}
+
+.nav-link.active {
+  color: #fff;
+  background: var(--text-primary);
+}
+
+/* ==================== SCREENS ==================== */
+.screen { display: none; }
+.screen.active { display: block; }
+.screen-flex.active { display: flex; }
+
+/* ==================== HERO SECTION ==================== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 140px 40px 120px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(20,184,166,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(139,92,246,0.05) 0%, transparent 50%),
+    var(--bg);
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(20,184,166,0.06) 0%, transparent 70%);
+  animation: floatOrb 20s ease-in-out infinite;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -150px; left: -150px;
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(139,92,246,0.05) 0%, transparent 70%);
+  animation: floatOrb 25s ease-in-out infinite reverse;
+}
+
+@keyframes floatOrb {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -40px) scale(1.05); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px 6px 8px;
+  border-radius: 980px;
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: revealUp 0.8s var(--ease) 0.2s forwards;
+}
+
+.hero-badge-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--teal);
+  box-shadow: 0 0 8px rgba(20,184,166,0.5);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.2); }
+}
+
+.hero h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(48px, 8vw, 96px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: revealUp 1s var(--ease) 0.4s forwards;
+}
+
+.hero h1 span {
+  background: linear-gradient(135deg, var(--teal) 0%, var(--teal-light) 50%, var(--violet-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: clamp(18px, 2.5vw, 24px);
+  font-weight: 300;
+  color: var(--text-secondary);
+  max-width: 640px;
+  line-height: 1.5;
+  margin-bottom: 48px;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: revealUp 1s var(--ease) 0.6s forwards;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: revealUp 1s var(--ease) 0.8s forwards;
+}
+
+@keyframes revealUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==================== BUTTONS — Apple Style ==================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 32px;
+  border-radius: 980px;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: all 0.4s var(--ease);
+  border: none;
+  letter-spacing: -0.01em;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary {
+  background: var(--text-primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #333;
+  transform: scale(1.02);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+}
+
+.btn-primary:active { transform: scale(0.98); }
+
+.btn-secondary {
+  background: transparent;
+  color: var(--teal);
+  border: 1.5px solid var(--teal);
+}
+
+.btn-secondary:hover {
+  background: rgba(20,184,166,0.06);
+  transform: scale(1.02);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-primary);
+  padding: 14px 24px;
+}
+
+.btn-ghost:hover { background: rgba(0,0,0,0.04); }
+
+.btn .arrow {
+  transition: transform 0.3s var(--ease);
+  font-size: 18px;
+}
+
+.btn:hover .arrow { transform: translateX(3px); }
+
+/* ==================== SECTION LAYOUT ==================== */
+.section {
+  padding: 120px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-dark {
+  background: var(--bg-dark);
+  color: #f5f5f7;
+  max-width: none;
+  padding: 120px max(40px, calc((100vw - 1200px) / 2));
+}
+
+.section-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--teal);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+
+.section-dark .section-label { color: var(--teal-light); }
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 20px;
+}
+
+.section-subtitle {
+  font-size: clamp(16px, 2vw, 21px);
+  font-weight: 300;
+  color: var(--text-secondary);
+  max-width: 600px;
+  line-height: 1.5;
+}
+
+.section-dark .section-subtitle { color: #a1a1a6; }
+
+/* ==================== FEATURE GRID — Apple Bento ==================== */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 64px;
+}
+
+.bento-card {
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s var(--ease);
+  cursor: default;
+}
+
+.bento-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+.bento-card-large {
+  grid-column: span 2;
+  min-height: 360px;
+}
+
+.bento-card-tall {
+  grid-row: span 2;
+  min-height: 480px;
+}
+
+.bento-card-white {
+  background: var(--bg-warm);
+  border: 1px solid var(--border);
+}
+
+.bento-card-teal {
+  background: linear-gradient(160deg, #f0fdfa 0%, #ccfbf1 100%);
+  border: 1px solid rgba(20,184,166,0.12);
+}
+
+.bento-card-violet {
+  background: linear-gradient(160deg, #f5f3ff 0%, #ede9fe 100%);
+  border: 1px solid rgba(139,92,246,0.12);
+}
+
+.bento-card-coral {
+  background: linear-gradient(160deg, #fff7ed 0%, #ffedd5 100%);
+  border: 1px solid rgba(249,115,22,0.12);
+}
+
+.bento-card-dark {
+  background: var(--bg-dark);
+  color: #f5f5f7;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.bento-icon {
+  width: 48px; height: 48px;
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.bento-icon-teal { background: rgba(20,184,166,0.12); }
+.bento-icon-violet { background: rgba(139,92,246,0.12); }
+.bento-icon-coral { background: rgba(249,115,22,0.12); }
+
+.bento-card h3 {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+.bento-card p {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.bento-card-dark p { color: #a1a1a6; }
+
+.bento-card .bento-visual {
+  position: absolute;
+  bottom: -20px; right: -20px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  opacity: 0.08;
+}
+
+.bento-card-teal .bento-visual { background: var(--teal); }
+.bento-card-violet .bento-visual { background: var(--violet); }
+.bento-card-coral .bento-visual { background: var(--coral); }
+
+/* ==================== KNOWLEDGE GRAPH ==================== */
+.graph-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 64px auto 0;
+  aspect-ratio: 4/3;
+  position: relative;
+}
+
+.graph-center {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column;
+  color: #fff;
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 700;
+  box-shadow: 0 8px 32px rgba(20,184,166,0.3);
+  z-index: 2;
+}
+
+.graph-center small {
+  font-size: 11px;
+  font-weight: 400;
+  opacity: 0.85;
+  font-family: var(--font-sans);
+}
+
+.graph-node {
+  position: absolute;
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.5s var(--ease-spring);
+  z-index: 2;
+  text-align: center;
+}
+
+.graph-node span { font-size: 20px; margin-bottom: 2px; }
+
+.graph-node:hover {
+  transform: scale(1.15);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+}
+
+.graph-node:nth-child(2) { top: 8%; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #f0fdfa, #ccfbf1); color: var(--teal-dark); }
+.graph-node:nth-child(3) { top: 30%; right: 8%; background: linear-gradient(135deg, #f5f3ff, #ede9fe); color: var(--violet); }
+.graph-node:nth-child(4) { bottom: 30%; right: 4%; background: linear-gradient(135deg, #fff7ed, #ffedd5); color: var(--coral); }
+.graph-node:nth-child(5) { bottom: 8%; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #f0fdfa, #ccfbf1); color: var(--teal-dark); }
+.graph-node:nth-child(6) { bottom: 30%; left: 4%; background: linear-gradient(135deg, #f5f3ff, #ede9fe); color: var(--violet); }
+.graph-node:nth-child(7) { top: 30%; left: 8%; background: linear-gradient(135deg, #fff7ed, #ffedd5); color: var(--coral); }
+
+.graph-node:nth-child(2):hover { transform: translateX(-50%) scale(1.15); }
+.graph-node:nth-child(5):hover { transform: translateX(-50%) scale(1.15); }
+
+.graph-line {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 1px;
+  height: 140px;
+  background: linear-gradient(to bottom, rgba(20,184,166,0.3), transparent);
+  transform-origin: top center;
+  z-index: 1;
+}
+
+.graph-line:nth-child(8) { transform: rotate(0deg); }
+.graph-line:nth-child(9) { transform: rotate(60deg); }
+.graph-line:nth-child(10) { transform: rotate(120deg); }
+.graph-line:nth-child(11) { transform: rotate(180deg); }
+.graph-line:nth-child(12) { transform: rotate(240deg); }
+.graph-line:nth-child(13) { transform: rotate(300deg); }
+
+/* ==================== CLASSROOM ==================== */
+.classroom-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 24px;
+  margin-top: 48px;
+  min-height: 600px;
+}
+
+.classroom-sidebar {
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-sans);
+}
+
+.sidebar-item:hover {
+  background: rgba(0,0,0,0.04);
+  color: var(--text-primary);
+}
+
+.sidebar-item.active {
+  background: var(--teal);
+  color: #fff;
+}
+
+.sidebar-item .icon { font-size: 18px; }
+
+.classroom-main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.course-hero-card {
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--teal) 0%, #0d9488 60%, var(--violet) 100%);
+  padding: 48px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.course-hero-card::after {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 240px; height: 240px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+}
+
+.course-hero-card h3 {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+.course-hero-card p {
+  font-size: 16px;
+  opacity: 0.85;
+  max-width: 480px;
+  line-height: 1.6;
+}
+
+.course-progress {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.2);
+  overflow: hidden;
+}
+
+.progress-fill {
+  width: 68%;
+  height: 100%;
+  border-radius: 3px;
+  background: #fff;
+  transition: width 1s var(--ease);
+}
+
+.progress-label { font-size: 14px; opacity: 0.9; font-weight: 500; }
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.tool-card {
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  padding: 28px;
+  cursor: pointer;
+  transition: all 0.4s var(--ease);
+}
+
+.tool-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--teal);
+}
+
+.tool-card .tool-icon {
+  width: 44px; height: 44px;
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  margin-bottom: 16px;
+}
+
+.tool-card h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+
+.tool-card p {
+  font-size: 13px;
+  color: var(--text-tertiary);
+}
+
+/* ==================== QUIZ / PRACTICE ==================== */
+.quiz-container {
+  max-width: 720px;
+  margin: 64px auto 0;
+}
+
+.quiz-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.quiz-timer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border-radius: 980px;
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  font-size: 15px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.quiz-timer .dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--coral);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.quiz-progress-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.quiz-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: all 0.3s var(--ease);
+}
+
+.quiz-dot.active { background: var(--teal); transform: scale(1.3); }
+.quiz-dot.done { background: var(--teal-light); }
+
+.quiz-card {
+  border-radius: var(--radius-xl);
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  padding: 48px;
+  box-shadow: var(--shadow-md);
+}
+
+.quiz-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--teal);
+  margin-bottom: 12px;
+}
+
+.quiz-question {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  margin-bottom: 36px;
+}
+
+.quiz-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.quiz-option {
+  padding: 20px 24px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border);
+  background: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+  font-family: var(--font-sans);
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.quiz-option:hover {
+  border-color: var(--teal);
+  background: rgba(20,184,166,0.04);
+}
+
+.quiz-option.selected {
+  border-color: var(--teal);
+  background: rgba(20,184,166,0.08);
+  box-shadow: 0 0 0 3px rgba(20,184,166,0.12);
+}
+
+.quiz-option .option-letter {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 600;
+  flex-shrink: 0;
+  transition: all 0.3s var(--ease);
+}
+
+.quiz-option.selected .option-letter {
+  background: var(--teal);
+  color: #fff;
+}
+
+/* ==================== DASHBOARD / LEARNING CENTER ==================== */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 48px;
+}
+
+.stat-card {
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  transition: all 0.4s var(--ease);
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.stat-value {
+  font-family: var(--font-serif);
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.stat-value.teal { color: var(--teal); }
+.stat-value.violet { color: var(--violet); }
+.stat-value.coral { color: var(--coral); }
+
+.stat-label {
+  font-size: 14px;
+  color: var(--text-tertiary);
+  font-weight: 500;
+}
+
+.stat-change {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--teal);
+  margin-top: 8px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.dash-card {
+  border-radius: var(--radius-lg);
+  padding: 36px;
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+}
+
+.dash-card h4 {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  letter-spacing: -0.01em;
+}
+
+/* Learning Path */
+.learning-path {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.path-step {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border-radius: var(--radius-md);
+  transition: background 0.3s var(--ease);
+  cursor: pointer;
+}
+
+.path-step:hover { background: rgba(0,0,0,0.02); }
+
+.path-dot {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700;
+  flex-shrink: 0;
+}
+
+.path-dot.done { background: var(--teal); color: #fff; }
+.path-dot.current { background: rgba(20,184,166,0.12); color: var(--teal); border: 2px solid var(--teal); }
+.path-dot.locked { background: var(--border); color: var(--text-tertiary); }
+
+.path-info h5 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.path-info p {
+  font-size: 13px;
+  color: var(--text-tertiary);
+}
+
+/* Credit Card */
+.credit-card {
+  border-radius: var(--radius-lg);
+  padding: 36px;
+  background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 50%, var(--violet) 100%);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.credit-card::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+}
+
+.credit-card .credit-value {
+  font-family: var(--font-serif);
+  font-size: 56px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 4px;
+}
+
+.credit-card .credit-label {
+  font-size: 14px;
+  opacity: 0.8;
+  margin-bottom: 24px;
+}
+
+.credit-card .credit-tier {
+  display: inline-flex;
+  padding: 6px 16px;
+  border-radius: 980px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(8px);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ==================== AI CHAT ==================== */
+.chat-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  height: calc(100vh - 52px);
+  margin-top: 52px;
+}
+
+.chat-sidebar {
+  border-right: 1px solid var(--border);
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  background: rgba(250,250,249,0.5);
+}
+
+.chat-sidebar-header {
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.chat-history-item {
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+  color: var(--text-secondary);
+  border: none;
+  background: none;
+  text-align: left;
+  width: 100%;
+  font-family: var(--font-sans);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-history-item:hover { background: rgba(0,0,0,0.04); }
+.chat-history-item.active { background: rgba(20,184,166,0.08); color: var(--teal); font-weight: 500; }
+
+.chat-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.chat-msg {
+  display: flex;
+  gap: 16px;
+  max-width: 720px;
+}
+
+.chat-msg.user { flex-direction: row-reverse; align-self: flex-end; }
+
+.chat-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.chat-avatar.ai {
+  background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+  color: #fff;
+}
+
+.chat-avatar.human {
+  background: var(--border);
+  color: var(--text-secondary);
+}
+
+.chat-bubble {
+  padding: 16px 20px;
+  border-radius: 20px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.chat-msg.ai .chat-bubble {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-top-left-radius: 4px;
+}
+
+.chat-msg.user .chat-bubble {
+  background: var(--text-primary);
+  color: #fff;
+  border-top-right-radius: 4px;
+}
+
+.chat-input-area {
+  padding: 20px 40px 28px;
+  border-top: 1px solid var(--border-light);
+}
+
+.chat-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  border-radius: 980px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  transition: all 0.3s var(--ease);
+}
+
+.chat-input-wrap:focus-within {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(20,184,166,0.1);
+}
+
+.chat-input-wrap input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  font-family: var(--font-sans);
+  background: transparent;
+  color: var(--text-primary);
+}
+
+.chat-input-wrap input::placeholder { color: var(--text-tertiary); }
+
+.chat-send-btn {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--teal);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  transition: all 0.3s var(--ease);
+}
+
+.chat-send-btn:hover { background: var(--teal-dark); transform: scale(1.05); }
+
+/* ==================== QUICK TOOLS in Chat ==================== */
+.chat-quick-tools {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 0 40px 8px;
+}
+
+.quick-tool-btn {
+  padding: 8px 14px;
+  border-radius: 980px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+  font-family: var(--font-sans);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.quick-tool-btn:hover {
+  border-color: var(--teal);
+  color: var(--teal);
+  background: rgba(20,184,166,0.04);
+}
+
+/* ==================== SCROLL REVEAL ==================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s var(--ease);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 1024px) {
+  .bento-grid { grid-template-columns: repeat(2, 1fr); }
+  .bento-card-large { grid-column: span 2; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .classroom-layout { grid-template-columns: 200px 1fr; }
+  .tools-grid { grid-template-columns: repeat(2, 1fr); }
+  .chat-layout { grid-template-columns: 1fr; }
+  .chat-sidebar { display: none; }
+}
+
+@media (max-width: 768px) {
+  .bento-grid { grid-template-columns: 1fr; }
+  .bento-card-large { grid-column: span 1; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .classroom-layout { grid-template-columns: 1fr; }
+  .classroom-sidebar { display: none; }
+  .tools-grid { grid-template-columns: 1fr; }
+  .dashboard-grid { grid-template-columns: 1fr; }
+  .quiz-options { grid-template-columns: 1fr; }
+  .chat-quick-tools { grid-template-columns: repeat(2, 1fr); }
+  .nav-links { gap: 2px; }
+  .nav-link { padding: 6px 10px; font-size: 12px; }
+  .section { padding: 80px 24px; }
+  .hero { padding: 120px 24px 80px; }
+}
+
+@media (max-width: 480px) {
+  .stats-row { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 40px; }
+  .chat-quick-tools { grid-template-columns: 1fr 1fr; }
+}
+
+/* ==================== 小美虚拟人 — CSS Art ==================== */
+.xiaomei {
+  width: 80px; height: 80px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.xiaomei-circle {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--teal-light) 0%, var(--teal) 100%);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 24px rgba(20,184,166,0.3);
+  animation: float 3s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+.xiaomei-circle::after {
+  content: '';
+  position: absolute;
+  top: 8px; left: 12px;
+  width: 24px; height: 16px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+}
+
+.xiaomei-face {
+  font-size: 36px;
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ==================== FOOTER ==================== */
+.footer {
+  padding: 40px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-tertiary);
+  border-top: 1px solid var(--border-light);
+}
+
+.footer a {
+  color: var(--teal);
+  text-decoration: none;
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== NAVIGATION ==================== -->
+<nav class="nav" id="mainNav">
+  <button class="nav-logo" onclick="showScreen('home')">
+    <div class="nav-logo-icon">美</div>
+    海峡美育
+  </button>
+  <div class="nav-links">
+    <button class="nav-link active" data-target="home" onclick="showScreen('home')">首页</button>
+    <button class="nav-link" data-target="explore" onclick="showScreen('explore')">知识探索</button>
+    <button class="nav-link" data-target="classroom" onclick="showScreen('classroom')">互动课堂</button>
+    <button class="nav-link" data-target="practice" onclick="showScreen('practice')">练习测评</button>
+    <button class="nav-link" data-target="dashboard" onclick="showScreen('dashboard')">学习中心</button>
+    <button class="nav-link" data-target="chat" onclick="showScreen('chat')">AI 助手</button>
+  </div>
+</nav>
+
+<!-- ==================== SCREEN 1: HOME / HERO ==================== -->
+<div id="screen-home" class="screen active">
+  <div class="hero">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      出版业首个美育 AI 智能体
+    </div>
+    <h1>以美育人<br><span>智启未来</span></h1>
+    <p class="hero-subtitle">融合出版 × 人工智能 × 美学教育，构建知识结构化识别、多模态互动课堂与个性化知识库的全新学习体验</p>
+    <div class="hero-ctas">
+      <button class="btn btn-primary" onclick="showScreen('explore')">开始探索 <span class="arrow">→</span></button>
+      <button class="btn btn-secondary" onclick="showScreen('classroom')">体验课堂</button>
+    </div>
+  </div>
+
+  <!-- Feature Bento Grid -->
+  <div class="section">
+    <div class="reveal">
+      <div class="section-label">Core Capabilities</div>
+      <div class="section-title">三大核心引擎</div>
+      <div class="section-subtitle">词元驱动，AI 融合，让每一次美育体验都独一无二</div>
+    </div>
+    <div class="bento-grid reveal">
+      <div class="bento-card bento-card-large bento-card-teal">
+        <div class="bento-icon bento-icon-teal">🔍</div>
+        <h3>知识结构化识别</h3>
+        <p>基于词元驱动的 AI 引擎，自动识别、提取、结构化美育知识，构建可交互的知识图谱。从一页书到一张图，让隐含的美学知识显性化。</p>
+        <div class="bento-visual"></div>
+      </div>
+      <div class="bento-card bento-card-violet">
+        <div class="bento-icon bento-icon-violet">🎨</div>
+        <h3>多模态互动课堂</h3>
+        <p>书法临摹 · AI 伴学 · 智能评价</p>
+        <div class="bento-visual"></div>
+      </div>
+      <div class="bento-card bento-card-coral">
+        <div class="bento-icon bento-icon-coral">📚</div>
+        <h3>个性化知识库</h3>
+        <p>聚合资源 · 路径推荐 · 学分体系</p>
+        <div class="bento-visual"></div>
+      </div>
+      <div class="bento-card bento-card-dark">
+        <div class="bento-icon" style="background:rgba(255,255,255,0.1)">🤖</div>
+        <h3>AI 伴学助手「小美」</h3>
+        <p>你的美学导游与学习伙伴，24 小时在线，随时问答、创作指导与学习规划</p>
+      </div>
+      <div class="bento-card bento-card-white">
+        <div class="bento-icon bento-icon-teal">📊</div>
+        <h3>学习数据洞察</h3>
+        <p>可视化学习轨迹、成就徽章与智能学习报告</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dark Feature Section -->
+  <div class="section-dark">
+    <div class="reveal" style="text-align:center; max-width:800px; margin:0 auto;">
+      <div class="section-label">Powered by AI</div>
+      <div class="section-title" style="margin-bottom:16px;">词元驱动，万物可学</div>
+      <div class="section-subtitle" style="margin:0 auto 48px;">每一个知识单元都被精准识别与关联，构建从「一个知识点」到「一片知识海」的智能学习网络</div>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; max-width:1200px; margin:0 auto;" class="reveal">
+      <div style="border-radius:var(--radius-lg); padding:36px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08);">
+        <div style="font-family:var(--font-serif); font-size:48px; font-weight:700; color:var(--teal-light); margin-bottom:8px;">10万+</div>
+        <div style="font-size:15px; color:#a1a1a6;">结构化美学知识点</div>
+      </div>
+      <div style="border-radius:var(--radius-lg); padding:36px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08);">
+        <div style="font-family:var(--font-serif); font-size:48px; font-weight:700; color:var(--violet-light); margin-bottom:8px;">6大</div>
+        <div style="font-size:15px; color:#a1a1a6;">美育门类全覆盖</div>
+      </div>
+      <div style="border-radius:var(--radius-lg); padding:36px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08);">
+        <div style="font-family:var(--font-serif); font-size:48px; font-weight:700; color:var(--coral-light); margin-bottom:8px;">AI级</div>
+        <div style="font-size:15px; color:#a1a1a6;">个性化推荐精度</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    © 2026 海峡美育智能体 · 词元驱动 AI 融合出版项目
+  </div>
+</div>
+
+<!-- ==================== SCREEN 2: KNOWLEDGE EXPLORE ==================== -->
+<div id="screen-explore" class="screen">
+  <div class="section" style="padding-top:120px;">
+    <div class="reveal">
+      <div class="section-label">Knowledge Graph</div>
+      <div class="section-title">知识图谱探索</div>
+      <div class="section-subtitle">六大美育门类，智能关联，触类旁通</div>
+    </div>
+    <div class="graph-container reveal">
+      <div class="graph-center">美育<small>知识图谱</small></div>
+      <div class="graph-node"><span>🎭</span>戏曲</div>
+      <div class="graph-node"><span>🖌️</span>书法</div>
+      <div class="graph-node"><span>🎨</span>绘画</div>
+      <div class="graph-node"><span>🎵</span>音乐</div>
+      <div class="graph-node"><span>🏛️</span>建筑</div>
+      <div class="graph-node"><span>🏺</span>工艺</div>
+      <div class="graph-line"></div>
+      <div class="graph-line"></div>
+      <div class="graph-line"></div>
+      <div class="graph-line"></div>
+      <div class="graph-line"></div>
+      <div class="graph-line"></div>
+    </div>
+
+    <!-- Category Detail Cards -->
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:80px;" class="reveal">
+      <div class="bento-card bento-card-teal" style="border-radius:var(--radius-lg); padding:32px;">
+        <div style="font-size:28px; margin-bottom:12px;">🖌️</div>
+        <h3 style="font-family:var(--font-serif); font-size:20px; font-weight:600; margin-bottom:6px;">书法艺术</h3>
+        <p style="font-size:14px; color:var(--text-secondary); line-height:1.6;">从甲骨文到行草，AI 智能识别笔法结构，临摹指导与风格分析</p>
+        <div style="margin-top:16px; display:flex; gap:6px; flex-wrap:wrap;">
+          <span style="padding:4px 10px; border-radius:980px; background:rgba(20,184,166,0.1); font-size:12px; color:var(--teal-dark);">楷书</span>
+          <span style="padding:4px 10px; border-radius:980px; background:rgba(20,184,166,0.1); font-size:12px; color:var(--teal-dark);">行书</span>
+          <span style="padding:4px 10px; border-radius:980px; background:rgba(20,184,166,0.1); font-size:12px; color:var(--teal-dark);">草书</span>
+        </div>
+      </div>
+      <div class="bento-card bento-card-violet" style="border-radius:var(--radius-lg); padding:32px;">
+        <div style="font-size:28px; margin-bottom:12px;">🎨</div>
+        <h3 style="font-family:var(--font-serif); font-size:20px; font-weight:600; margin-bottom:6px;">绘画鉴赏</h3>
+        <p style="font-size:14px; color:var(--text-secondary); line-height:1.6;">青绿山水、水墨写意，AI 辅助画面解读与风格识别</p>
+        <div style="margin-top:16px; display:flex; gap:6px; flex-wrap:wrap;">
+          <span style="padding:4px 10px; border-radius:980px; background:rgba(139,92,246,0.1); font-size:12px; color:var(--violet);">山水</span>
+          <span style="padding:4px 10px; border-radius:980px; background:rgba(139,92,246,0.1); font-size:12px; color:var(--violet);">花鸟</span>
+          <span style="padding:4px 10px; border-radius:980px; background:rgba(139,92,246,0.1); font-size:12px; color:var(--violet);">人物</span>
+        </div>
+      </div>
+      <div class="bento-card bento-card-coral" style="border-radius:var(--radius-lg); padding:32px;">
+        <div style="font-size:28px; margin-bottom:12px;">🎭</div>
+        <h3 style="font-family:var(--font-serif); font-size:20px; font-weight:600; margin-bottom:6px;">戏曲文化</h3>
+        <p style="font-size:14px; color:var(--text-secondary); line-height:1.6;">京剧、昆曲、闽台歌仔戏，多模态互动沉浸体验</p>
+        <div style="margin-top:16px; display:flex; gap:6px; flex-wrap:wrap;">
+          <span style="padding:4px 10px; border-radius:980px; background:rgba(249,115,22,0.1); font-size:12px; color:var(--coral);">京剧</span>
+          <span style="padding:4px 10px; border-radius:980px; background:rgba(249,115,22,0.1); font-size:12px; color:var(--coral);">昆曲</span>
+          <span style="padding:4px 10px; border-radius:980px; background:rgba(249,115,22,0.1); font-size:12px; color:var(--coral);">歌仔戏</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">© 2026 海峡美育智能体 · 词元驱动 AI 融合出版项目</div>
+</div>
+
+<!-- ==================== SCREEN 3: CLASSROOM ==================== -->
+<div id="screen-classroom" class="screen">
+  <div class="section" style="padding-top:120px;">
+    <div class="reveal">
+      <div class="section-label">Interactive Classroom</div>
+      <div class="section-title">AI 互动课堂</div>
+      <div class="section-subtitle">多模态学习工具，让美育课堂沉浸而生动</div>
+    </div>
+    <div class="classroom-layout reveal">
+      <div class="classroom-sidebar">
+        <button class="sidebar-item active"><span class="icon">🖌️</span> 书法</button>
+        <button class="sidebar-item"><span class="icon">🎨</span> 绘画</button>
+        <button class="sidebar-item"><span class="icon">🎭</span> 戏曲</button>
+        <button class="sidebar-item"><span class="icon">🎵</span> 音乐</button>
+        <button class="sidebar-item"><span class="icon">🏛️</span> 建筑</button>
+        <button class="sidebar-item"><span class="icon">🏺</span> 工艺</button>
+        <div style="flex:1"></div>
+        <button class="sidebar-item" style="color:var(--teal);"><span class="icon">➕</span> 更多门类</button>
+      </div>
+      <div class="classroom-main">
+        <div class="course-hero-card">
+          <h3>楷书基础 · 永字八法</h3>
+          <p>掌握「永」字八种基本笔法，从横竖撇捺到折钩提点，AI 实时评价每一笔的力道与结构</p>
+          <div class="course-progress">
+            <div class="progress-bar"><div class="progress-fill"></div></div>
+            <span class="progress-label">68%</span>
+          </div>
+        </div>
+        <div class="tools-grid">
+          <div class="tool-card">
+            <div class="tool-icon" style="background:rgba(20,184,166,0.08);">✍️</div>
+            <h4>AI 临摹</h4>
+            <p>实时笔法识别与指导</p>
+          </div>
+          <div class="tool-card">
+            <div class="tool-icon" style="background:rgba(139,92,246,0.08);">🖼️</div>
+            <h4>名作赏析</h4>
+            <p>AI 解读经典作品</p>
+          </div>
+          <div class="tool-card">
+            <div class="tool-icon" style="background:rgba(249,115,22,0.08);">🎙️</div>
+            <h4>语音讲解</h4>
+            <p>沉浸式知识播客</p>
+          </div>
+          <div class="tool-card">
+            <div class="tool-icon" style="background:rgba(20,184,166,0.08);">📸</div>
+            <h4>拍照识图</h4>
+            <p>识别艺术品与风格</p>
+          </div>
+          <div class="tool-card">
+            <div class="tool-icon" style="background:rgba(139,92,246,0.08);">🧩</div>
+            <h4>拼图创作</h4>
+            <p>趣味重构经典画面</p>
+          </div>
+          <div class="tool-card">
+            <div class="tool-icon" style="background:rgba(249,115,22,0.08);">📊</div>
+            <h4>学习报告</h4>
+            <p>可视化成长轨迹</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">© 2026 海峡美育智能体 · 词元驱动 AI 融合出版项目</div>
+</div>
+
+<!-- ==================== SCREEN 4: PRACTICE / QUIZ ==================== -->
+<div id="screen-practice" class="screen">
+  <div class="section" style="padding-top:120px;">
+    <div class="reveal" style="text-align:center;">
+      <div class="section-label">Practice & Assessment</div>
+      <div class="section-title">练习测评</div>
+      <div class="section-subtitle" style="margin:0 auto;">游戏化问答，让知识巩固变成趣味挑战</div>
+    </div>
+    <div class="quiz-container reveal">
+      <div class="quiz-header">
+        <div class="quiz-progress-dots">
+          <div class="quiz-dot done"></div>
+          <div class="quiz-dot done"></div>
+          <div class="quiz-dot active"></div>
+          <div class="quiz-dot"></div>
+          <div class="quiz-dot"></div>
+          <div class="quiz-dot"></div>
+          <div class="quiz-dot"></div>
+          <div class="quiz-dot"></div>
+        </div>
+        <div class="quiz-timer">
+          <div class="dot"></div>
+          02:34
+        </div>
+      </div>
+      <div class="quiz-card">
+        <div class="quiz-number">Question 3 of 8</div>
+        <div class="quiz-question">「青绿山水」画派的代表人物是以下哪两位？</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="selectQuizOption(this)">
+            <span class="option-letter">A</span>
+            李思训 · 李昭道
+          </button>
+          <button class="quiz-option" onclick="selectQuizOption(this)">
+            <span class="option-letter">B</span>
+            范宽 · 郭熙
+          </button>
+          <button class="quiz-option selected" onclick="selectQuizOption(this)">
+            <span class="option-letter">C</span>
+            王希孟 · 赵伯驹
+          </button>
+          <button class="quiz-option" onclick="selectQuizOption(this)">
+            <span class="option-letter">D</span>
+            黄公望 · 吴镇
+          </button>
+        </div>
+      </div>
+      <div style="text-align:center; margin-top:32px;">
+        <button class="btn btn-primary">确认答案 <span class="arrow">→</span></button>
+      </div>
+    </div>
+  </div>
+  <div class="footer">© 2026 海峡美育智能体 · 词元驱动 AI 融合出版项目</div>
+</div>
+
+<!-- ==================== SCREEN 5: DASHBOARD ==================== -->
+<div id="screen-dashboard" class="screen">
+  <div class="section" style="padding-top:120px;">
+    <div class="reveal">
+      <div class="section-label">Learning Center</div>
+      <div class="section-title">学习中心</div>
+      <div class="section-subtitle">你的美育成长全记录</div>
+    </div>
+    <div class="stats-row reveal">
+      <div class="stat-card">
+        <div class="stat-value teal">128</div>
+        <div class="stat-label">已学知识点</div>
+        <div class="stat-change">↑ 12 本周</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value violet">46</div>
+        <div class="stat-label">完成课时</div>
+        <div class="stat-change">↑ 3 本周</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value coral">92%</div>
+        <div class="stat-label">测评正确率</div>
+        <div class="stat-change">↑ 5% 本周</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="color:var(--text-primary);">15</div>
+        <div class="stat-label">连续学习天数</div>
+        <div class="stat-change">🔥 保持中</div>
+      </div>
+    </div>
+    <div class="dashboard-grid reveal">
+      <div class="credit-card">
+        <div class="credit-value">2,480</div>
+        <div class="credit-label">美学学分</div>
+        <div class="credit-tier">✦ 青铜美学士</div>
+      </div>
+      <div class="dash-card">
+        <h4>学习路径</h4>
+        <div class="learning-path">
+          <div class="path-step">
+            <div class="path-dot done">✓</div>
+            <div class="path-info">
+              <h5>书法基础入门</h5>
+              <p>8 课时 · 已完成</p>
+            </div>
+          </div>
+          <div class="path-step">
+            <div class="path-dot current">2</div>
+            <div class="path-info">
+              <h5>楷书进阶 · 结构之美</h5>
+              <p>12 课时 · 进行中 (68%)</p>
+            </div>
+          </div>
+          <div class="path-step">
+            <div class="path-dot locked">3</div>
+            <div class="path-info">
+              <h5>行书入门 · 流动的线条</h5>
+              <p>10 课时 · 未解锁</p>
+            </div>
+          </div>
+          <div class="path-step">
+            <div class="path-dot locked">4</div>
+            <div class="path-info">
+              <h5>山水画鉴赏</h5>
+              <p>8 课时 · 未解锁</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dash-card">
+        <h4>近期成就</h4>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <div style="display:flex; align-items:center; gap:12px; padding:12px; border-radius:var(--radius-sm); background:rgba(20,184,166,0.04);">
+            <div style="width:40px;height:40px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:18px;">🏆</div>
+            <div>
+              <div style="font-size:14px;font-weight:600;">笔法新星</div>
+              <div style="font-size:12px;color:var(--text-tertiary);">楷书基础全部达标</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px; padding:12px; border-radius:var(--radius-sm); background:rgba(139,92,246,0.04);">
+            <div style="width:40px;height:40px;border-radius:50%;background:var(--violet);display:flex;align-items:center;justify-content:center;font-size:18px;">🎯</div>
+            <div>
+              <div style="font-size:14px;font-weight:600;">连续打卡 15 天</div>
+              <div style="font-size:12px;color:var(--text-tertiary);">坚持不懈的学习者</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px; padding:12px; border-radius:var(--radius-sm); background:rgba(249,115,22,0.04);">
+            <div style="width:40px;height:40px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;font-size:18px;">⭐</div>
+            <div>
+              <div style="font-size:14px;font-weight:600;">测评达人</div>
+              <div style="font-size:12px;color:var(--text-tertiary);">正确率超 90%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dash-card">
+        <h4>学习热力图</h4>
+        <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:4px; margin-top:8px;">
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.08);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.2);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.4);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.08);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.6);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.3);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.8);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.1);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.5);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.3);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.7);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.15);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.9);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.4);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.2);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.6);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.1);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.45);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.3);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.7);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.55);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.2);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.8);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.35);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.5);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.15);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.65);"></div>
+          <div style="aspect-ratio:1; border-radius:4px; background:rgba(20,184,166,0.4);"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">© 2026 海峡美育智能体 · 词元驱动 AI 融合出版项目</div>
+</div>
+
+<!-- ==================== SCREEN 6: AI CHAT ==================== -->
+<div id="screen-chat" class="screen screen-flex">
+  <div class="chat-layout">
+    <div class="chat-sidebar">
+      <div class="chat-sidebar-header">对话历史</div>
+      <button class="chat-history-item active">青绿山水画的构图分析</button>
+      <button class="chat-history-item">永字八法笔法详解</button>
+      <button class="chat-history-item">闽台戏曲文化对比</button>
+      <button class="chat-history-item">水墨画的留白美学</button>
+      <button class="chat-history-item">古典建筑对称之美</button>
+      <button class="chat-history-item">青花瓷纹样解读</button>
+      <div style="flex:1"></div>
+      <button class="btn btn-secondary" style="width:100%; font-size:13px; padding:10px;">+ 新对话</button>
+    </div>
+    <div class="chat-main">
+      <div class="chat-messages">
+        <div class="chat-msg ai">
+          <div class="chat-avatar ai">美</div>
+          <div class="chat-bubble">你好！我是小美 🎨 你的美学导游与学习伙伴。今天想探索什么？可以问我任何关于美育的问题，也可以使用下方的快捷工具开始互动学习。</div>
+        </div>
+        <div class="chat-msg user">
+          <div class="chat-avatar human">我</div>
+          <div class="chat-bubble">帮我分析一下《千里江山图》的构图特点</div>
+        </div>
+        <div class="chat-msg ai">
+          <div class="chat-avatar ai">美</div>
+          <div class="chat-bubble">《千里江山图》是北宋王希孟的传世之作，其构图有三大显著特点：<br><br><strong>1. 散点透视</strong> — 画卷采用"移步换景"的散点透视法，观者视线随画卷展开而游走，突破了单一视点的局限。<br><br><strong>2. 三远法并用</strong> — 高远（仰视山势之雄）、深远（山后之山）、平远（遥望之境）三种透视巧妙交织。<br><br><strong>3. 青绿设色</strong> — 以石青、石绿为主色调，层层积染，形成"青绿山水"的经典范式。金碧辉煌又不失雅致。</div>
+        </div>
+      </div>
+      <div class="chat-quick-tools">
+        <button class="quick-tool-btn">🖌️ AI 临摹</button>
+        <button class="quick-tool-btn">🖼️ 名作赏析</button>
+        <button class="quick-tool-btn">📸 拍照识图</button>
+        <button class="quick-tool-btn">🎙️ 语音讲解</button>
+      </div>
+      <div class="chat-input-area">
+        <div class="chat-input-wrap">
+          <input type="text" placeholder="向小美提问任何美育问题…" id="chatInput">
+          <button class="chat-send-btn" id="chatSendBtn">↑</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ========== Screen Navigation ==========
+function showScreen(name) {
+  var screens = document.querySelectorAll('.screen');
+  for (var i = 0; i < screens.length; i++) {
+    screens[i].classList.remove('active');
+  }
+
+  var target = document.getElementById('screen-' + name);
+  if (target) {
+    void target.offsetWidth;
+    target.classList.add('active');
+  }
+
+  var links = document.querySelectorAll('.nav-link');
+  for (var j = 0; j < links.length; j++) {
+    links[j].classList.remove('active');
+  }
+
+  var activeLinks = document.querySelectorAll('[data-target="' + name + '"]');
+  for (var k = 0; k < activeLinks.length; k++) {
+    activeLinks[k].classList.add('active');
+  }
+
+  window.scrollTo({ top: 0, behavior: 'instant' });
+
+  // Re-trigger reveals on new screen
+  setTimeout(function() {
+    initReveal();
+  }, 100);
+}
+
+// ========== Quiz Option Selection ==========
+function selectQuizOption(btn) {
+  var options = document.querySelectorAll('.quiz-option');
+  for (var i = 0; i < options.length; i++) {
+    options[i].classList.remove('selected');
+  }
+  btn.classList.add('selected');
+}
+
+// ========== Sidebar Navigation ==========
+var sidebarItems = document.querySelectorAll('.sidebar-item');
+for (var i = 0; i < sidebarItems.length; i++) {
+  sidebarItems[i].addEventListener('click', function() {
+    var siblings = this.parentElement.querySelectorAll('.sidebar-item');
+    for (var j = 0; j < siblings.length; j++) {
+      siblings[j].classList.remove('active');
+    }
+    this.classList.add('active');
+  });
+}
+
+// ========== Chat History ==========
+var historyItems = document.querySelectorAll('.chat-history-item');
+for (var i = 0; i < historyItems.length; i++) {
+  historyItems[i].addEventListener('click', function() {
+    var siblings = document.querySelectorAll('.chat-history-item');
+    for (var j = 0; j < siblings.length; j++) {
+      siblings[j].classList.remove('active');
+    }
+    this.classList.add('active');
+  });
+}
+
+// ========== Scroll Reveal (Intersection Observer) ==========
+function initReveal() {
+  var reveals = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    for (var i = 0; i < reveals.length; i++) {
+      reveals[i].classList.add('visible');
+    }
+    return;
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    for (var i = 0; i < entries.length; i++) {
+      if (entries[i].isIntersecting) {
+        entries[i].target.classList.add('visible');
+      }
+    }
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  for (var i = 0; i < reveals.length; i++) {
+    if (!reveals[i].classList.contains('visible')) {
+      observer.observe(reveals[i]);
+    }
+  }
+}
+
+// ========== Nav Scroll Effect ==========
+window.addEventListener('scroll', function() {
+  var nav = document.getElementById('mainNav');
+  if (window.scrollY > 10) {
+    nav.classList.add('scrolled');
+  } else {
+    nav.classList.remove('scrolled');
+  }
+});
+
+// ========== Chat Send ==========
+document.getElementById('chatSendBtn').addEventListener('click', function() {
+  var input = document.getElementById('chatInput');
+  var text = input.value.trim();
+  if (!text) return;
+
+  var messages = document.querySelector('.chat-messages');
+
+  var userMsg = document.createElement('div');
+  userMsg.className = 'chat-msg user';
+  userMsg.innerHTML = '<div class="chat-avatar human">我</div><div class="chat-bubble">' + text + '</div>';
+  messages.appendChild(userMsg);
+
+  input.value = '';
+  messages.scrollTop = messages.scrollHeight;
+
+  setTimeout(function() {
+    var aiMsg = document.createElement('div');
+    aiMsg.className = 'chat-msg ai';
+    aiMsg.innerHTML = '<div class="chat-avatar ai">美</div><div class="chat-bubble">收到！让我来为你分析「' + text + '」的相关美学知识…</div>';
+    messages.appendChild(aiMsg);
+    messages.scrollTop = messages.scrollHeight;
+  }, 800);
+});
+
+document.getElementById('chatInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    document.getElementById('chatSendBtn').click();
+  }
+});
+
+// ========== Init ==========
+initReveal();
+</script>
+
+</body>
+</html>
